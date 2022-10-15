@@ -1,14 +1,12 @@
-# Interfacing-a-Digital-INPUT-push-button-to-LPC2148-ARM-7-Microcontroller-
+# Interfacing a Digital INPUT push button to LPC2148 ARM 7 Microcontroller 
+```
 Name :
-Roll no 
-Date of experiment :
-
-Ex. No. : 3
-Date: 
- 
-### Aim: To Interface a Digital input (pushbutton ) to LPC2148 ARM 7 and write a code to switch on and of an LED 
+Roll no :
+```
+## Aim
+To Interface a Digital input (pushbutton ) to LPC2148 ARM 7 and write a code to switch on and of an LED 
 Components required: Proteus ISIS professional suite, Kiel μ vision 5 Development environment 
-### Theory 
+## Theory 
 The full form of an ARM is an advanced reduced instruction set computer (RISC) machine, and it is a 32-bit processor architecture expanded by ARM holdings. The applications of an ARM processor include several microcontrollers as well as processors. The architecture of an ARM processor was licensed by many corporations for designing ARM processor-based SoC products and CPUs. This allows the corporations to manufacture their products using ARM architecture. Likewise, all main semiconductor companies will make ARM-based SOCs such as Samsung, Atmel, TI etc.
 
 
@@ -39,7 +37,7 @@ The main features of LPC2148 include the following.
 
 
 
-### Procedure:
+## Procedure:
 For creation of project on    Kiel μ vision 5 Development environment (LPC21 XX/48/38)
 1.	Click on the menu Project — New µVision Project creates a new project. Select an empty folder and enter the project name, for example Project1. It is good practice to use a separate folder for each project.
 2.	Next, the dialog Select Device for Target opens.
@@ -115,13 +113,49 @@ Figure -11 Hex file for simulation
 Step 9: Select the hex file from the Kiel program folder and import the program in to the microcontroller as shown in figure 11 ,  debug and if no errors in connections are found, run the VSM simulation to view the output.
 
 
-### Kiel - Program  
+## Kiel - Program  
+```
+#include <lpc214x.h>
 
+// Input switches
+#define SW1	0x00010000				// P1.16
 
-### Result :
-Interfacing a digital output with ARM microcontroller is executed 
+// Output LEDs
+#define LED_D9	0x00000400 			// P0.10
 
-### Output screen shots :
+void main ()
+{
+	IO0DIR = 0x003C3C00 ;			// Configure P0.10 to P0.13 and P0.18 to P0.21 as Output	
+	IO0SET = 0x003C3C00 ;			// SET (1) P0.10 to P0.13 and P0.18 to P0.21, LEDs OFF
+	while(1)
+	{
+		
+		if(!(IO1PIN & SW1))			// Check whether SW1 is pressed or not
+		{
+			IO0CLR = LED_D9 ;		// LED D9, ON if SW1 pressed
+		}
+		else
+		{
+			IO0SET = LED_D9 ;		// LED D9, OFF if SW1 released
+		}
+		
+	}
+}
+```
+
+## Output
+
+### Before Switching ON
+![out](./1.png)
+
+### After Switching ON
+![out](./2.png)
+
+### Circuit Diagram
+![out](./3.png)
+
+## Result
+Interfacing a digital output with ARM microcontroller is executed.
 
 
 
